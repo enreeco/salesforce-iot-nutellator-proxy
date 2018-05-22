@@ -1,3 +1,9 @@
+# Author
+
+Enrico Murru (blog.enree.co)
+
+This code is freely 
+
 # IoT Proxy Server
 
 The proxy has been developed to link a connected device (e.g. Arduino with Ethernet/WiFi shield) to Salesforce, using Platform Events.
