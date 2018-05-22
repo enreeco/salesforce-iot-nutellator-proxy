@@ -30,8 +30,7 @@ Update the `.env` file with the following values:
 * `SF_USERNAME`: Salesforce username
 * `SF_PASSWORD`: Salesforce password + token
 * `SF_LOGIN_URL`: login.salesforce.com
-* `BASIC_AUTH_USERNAME`: basic auth username
-* `BASIC_AUTH_PASSWORD`: basic auth password
+* `DATABASE_URL`: PostgreSQL connection string
 
 Run with **foreman**:
 
