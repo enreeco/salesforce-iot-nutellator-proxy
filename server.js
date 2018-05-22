@@ -15,19 +15,26 @@ var USERNAME = process.env.SF_USERNAME;
 var PASSWORD = process.env.SF_PASSWORD;
 var LOGIN_URL = 'https://'+(process.env.SF_LOGIN_URL || 'login.salesforce.com')+'/services/oauth2/token';
 
+var BASIC_AUTH_USERNAME = process.env.BASIC_AUTH_USERNAME || 'username';
+var BASIC_AUTH_PASSWORD = process.env.BASIC_AUTH_PASSWORD || 'password';
+
 app.get('/', function(req, res){
-    return res.send('Salesforce IoT Proxy <br/> &copy; Enrico Murru - WebResults '+((new Date()).getFullYear()));
+    return res.send('Salesforce IoT Proxy <br/> &copy; Enrico Murru - blog.enree.co '+((new Date()).getFullYear()));
 });
 
+//Basic Auth Support
+//Should be replaced with dynamic user selection
 app.use(basicAuth({
     users: {
-        'admin': 'supersecret'
+        BASIC_AUTH_USERNAME: BASIC_AUTH_PASSWORD
     },
     unauthorizedResponse: getUnauthorizedResponse
 }));
 
+/**
+ * Post Nutellator level
+ */
 app.post('/api/level', function (req, res) {
-    console.log(req.body);
 
     loginWithSalesforce()
     .then(function(loginResp) {
@@ -54,18 +61,28 @@ app.listen(PORT, function(){
     console.log('IoT proxy server listening on port '+PORT+'...');
 });
 
+/**
+ * Set an "anauthorized request" response
+ */
 function getUnauthorizedResponse(req) {
     return req.auth
         ? ('Credentials ' + req.auth.user + ':' + req.auth.password + ' rejected')
         : 'No credentials provided'
 }
 
+/**
+ * Sends a Salesforce Platform Event using REST APIs
+ * @param  {String} url   Salesforce server url
+ * @param  {String} token Salesforce session id
+ * @param  {Object} event Event object received from the IoT device
+ * @return {Promise}
+ */
 function sendPlatformEvent(url, token, event){
     
     return new Promise(function(resolve, reject) {
-    
+
         rp({
-            url: url+'/services/data/v42.0/sobjects/Temperature_Notification__e/',
+            url: url+'/services/data/v42.0/sobjects/Nutellevent__e/',
             headers:{
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+token
@@ -73,7 +90,7 @@ function sendPlatformEvent(url, token, event){
             method: 'POST',
             json: true,
             json: {
-                'Temperature__c': event.temperature,
+                'Nutellevel__e': event.level,
                 'Device_ID__c': event.device_id,
             },
         }).then(function (parsedBody) {
@@ -88,6 +105,10 @@ function sendPlatformEvent(url, token, event){
     });
 }
 
+/**
+ * Login to Salesforce using Oauth 2.0 Username-Password Flow
+ * @return {Promise}
+ */
 function loginWithSalesforce(){
     return new Promise(function(resolve, reject) {
     
