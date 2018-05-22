@@ -20,6 +20,8 @@ Providing a Basic Auth autentication, with the following header:
 Authorization: BASIC BASE64(username:password)
 ```
 
+Users are stored in a PostgreSQL database (see `utils\db.sql`): the database is initialized on startup.
+
 The proxy logs in to Salesforce using the provided username/password with a *OAuth Username-Password flow* and writes the `Nutellevel__e` platform event: an orchestration handles this event.
 
 ## Run Locally
