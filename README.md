@@ -2,15 +2,20 @@
 
 The proxy has been developed to link a connected device (e.g. Arduino with Ethernet/WiFi shield) to Salesforce, using Platform Events.
 
-The device should make a `POST` call to `https://proxy.doma.in/temperature` (or `http://localhost:3000/temperature`) passing the following JSON as body:
+The device should make a `POST` call to `https://proxy.doma.in/api/level` (or `http://localhost:3000/api/level`) passing the following JSON as body:
 ```json
 {
-    "temperature": 30,
+    "level": 30,
     "device_id": "XXXXXXXX"
 }
 ```
+Providing a Basic Auth autentication, with the following header:
 
-The proxy logs in to Salesforce using the provided username/password with a *OAuth Password flow* and writes the `Temperature_Notification__e` platform event: an orchestration handles this event.
+```
+Authorization: BASIC BASE64(username:password)
+```
+
+The proxy logs in to Salesforce using the provided username/password with a *OAuth Username-Password flow* and writes the `Nutellevel__e` platform event: an orchestration handles this event.
 
 ## Run Locally
 Update the `.env` file with the following values:
@@ -20,6 +25,8 @@ Update the `.env` file with the following values:
 * `SF_USERNAME`: Salesforce username
 * `SF_PASSWORD`: Salesforce password + token
 * `SF_LOGIN_URL`: login.salesforce.com
+* `BASIC_AUTH_USERNAME`: basic auth username
+* `BASIC_AUTH_PASSWORD`: basic auth password
 
 Run with **foreman**:
 
