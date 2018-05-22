@@ -2,7 +2,6 @@
 
 Enrico Murru (blog.enree.co)
 
-This code is freely 
 
 # IoT Proxy Server
 
