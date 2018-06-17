@@ -20,6 +20,7 @@ Providing a Basic Auth autentication, with the following header:
 
 ```
 Authorization: BASIC BASE64(username:password)
+Content-Type: application/json
 ```
 
 Users are stored in a PostgreSQL database (see `utils\db.sql`): the database must  initialized with:
