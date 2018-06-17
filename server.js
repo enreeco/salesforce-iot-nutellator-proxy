@@ -1,3 +1,6 @@
+/**
+ * Author: Enrico Murru (https://enree.co)
+ */
 var express    = require('express')
 var basicAuth  = require('express-basic-auth');
 var bodyParser = require('body-parser');
@@ -8,7 +11,7 @@ var utils      = require('./utils');
 var PORT = process.env.PORT || 3000;
 
 //DB initialization
-utils.initDB();
+//utils.initDB();
 
 var app = express();
 app.use(bodyParser.json())
@@ -21,7 +24,7 @@ app.get('/', function(req, res){
 });
 
 /**
- * Basic Auth Support
+ * Basic Auth Support from the routes defined now on
  */
 app.use(basicAuth({
     authorizer: utils.myAsyncAuthorizer,

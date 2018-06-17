@@ -8,21 +8,28 @@ Enrico Murru (blog.enree.co)
 The proxy has been developed to link a connected device (e.g. Arduino with Ethernet/WiFi shield) to Salesforce, using Platform Events.
 
 The device should make a `POST` call to `https://proxy.doma.in/api/level` (or `http://localhost:3000/api/level`) passing the following JSON as body:
+
 ```json
 {
     "level": 30,
     "device_id": "XXXXXXXX"
 }
 ```
+
 Providing a Basic Auth autentication, with the following header:
 
 ```
 Authorization: BASIC BASE64(username:password)
 ```
 
-Users are stored in a PostgreSQL database (see `utils\db.sql`): the database is initialized on startup.
+Users are stored in a PostgreSQL database (see `utils\db.sql`): the database must  initialized with:
 
-The proxy logs in to Salesforce using the provided username/password with a *OAuth Username-Password flow* and writes the `Nutellevel__e` platform event: an orchestration handles this event.
+```javascript
+var utils = require('./utils');
+utils.initDB();
+```
+
+The proxy logs in to Salesforce using the provided username/password with a *OAuth Username-Password flow* and writes the `Nutellevent__e` platform event: an orchestration handles this event.
 
 ## Run Locally
 Update the `.env` file with the following values:
