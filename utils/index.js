@@ -1,3 +1,6 @@
+/**
+ * Author: Enrico Murru (https://enree.co)
+ */
 var request = require('request');
 var rp      = require('request-promise');
 var pg      = require('pg');
