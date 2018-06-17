@@ -2,6 +2,8 @@
 
 Enrico Murru (blog.enree.co)
 
+https://blog.enree.co/2018/06/salesforce-iot-lets-play-the-game-with-salesforce-iot-part-3-heroku-iot-platform.html
+
 
 # IoT Proxy Server
 
