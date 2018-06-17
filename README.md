@@ -23,12 +23,19 @@ Authorization: BASIC BASE64(username:password)
 Content-Type: application/json
 ```
 
-Users are stored in a PostgreSQL database (see `utils\db.sql`): the database must  initialized with:
+Users are stored in a PostgreSQL database (see `utils\db.sql`): the database must  initialized locally with:
 
 ```javascript
 var utils = require('./utils');
 utils.initDB();
 ```
+
+Or in Heroku with:
+
+```
+heroku run node utils/dbinit.js
+```
+
 
 The proxy logs in to Salesforce using the provided username/password with a *OAuth Username-Password flow* and writes the `Nutellevent__e` platform event: an orchestration handles this event.
 
